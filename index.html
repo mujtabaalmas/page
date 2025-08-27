@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mujtaba's Personal Blog</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <style>
+    :root{
+      --bg:#f9fafb;
+      --surface:#ffffff;
+      --muted:#6b7280;
+      --primary:#06b6d4;
+      --secondary:#7c3aed;
+      --radius:14px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'Inter',sans-serif;
+      background:var(--bg);
+      color:#111827;
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;transition:0.3s ease}
+    a:hover{color:var(--primary)}
+    .container{
+      max-width:1200px;
+      margin:auto;
+      padding:40px 20px;
+    }
+    .resume{
+      display:grid;
+      grid-template-columns:320px 1fr;
+      background:var(--surface);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:0 12px 30px rgba(0,0,0,0.1);
+    }
+    aside{
+      background:#f3f4f6;
+      padding:32px 24px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+    .avatar{
+      width:160px;height:160px;border-radius:50%;overflow:hidden;
+      margin-bottom:20px;
+      border:4px solid rgba(0,0,0,0.08);
+      transition:transform .4s ease;
+    }
+
+    .neon-glow {
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3);
+      transition: all 0.3s ease;
+    }
+    .neon-glow:hover {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.7), 0 0 30px rgba(59, 130, 246, 0.5);
+    }
+        /* Social Icons Styling */
+    .social-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #1f2937; /* Gray-800 for contrast */
+      transition: all 0.3s ease;
+    }
+    .social-icon:hover {
+      background-color: #3b82f6; /* Blue-400 to match neon theme */
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.7), 0 0 20px rgba(59, 130, 246, 0.5);
+    }
+    .social-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: #d1d5db; /* Gray-300 for icon color */
+    }
+    .social-icon:hover svg {
+      fill: #ffffff; /* White on hover */
+    }
+    /* Smooth Scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+      .btn {
+    background-color: #273d5c; /* keep original nice blue */
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 8px;
+    transition: background-color 0.3s ease;
+  }
+  .btn:hover {
+     background-color: #3b82f6; 
+     box-shadow: 0 0 10px rgba(59, 130, 246, 0.7), 0 0 20px rgba(59, 130, 246, 0.5);
+  }
+
+    /* Modal */
+.modal {
+  display: none; /* hidden by default */
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 400px;
+  margin: 100px auto;
+  position: relative;
+  animation: fadeIn 0.4s ease-in-out;
+}
+/* Success animation */
+.success-check {
+  font-size: 50px;
+  color: green;
+  text-align: center;
+  animation: popIn 0.6s ease forwards;
+}
+
+    @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1.1); opacity: 1; }
+    }
+    .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    }
+    .close:hover {
+    color: black;
+    }
+    .form-group {
+    margin-bottom: 15px;
+    }
+    label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    }
+    input, textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    }
+    #formStatus {
+    margin-top: 10px;
+    font-size: 14px;
+    }
+    .avatar:hover{transform:scale(1.05)}
+    .avatar img{width:100%;height:100%;object-fit:cover}
+    h1{font-size:24px;font-weight:700;margin-bottom:4px;color:#111827}
+    .role{color:var(--muted);font-weight:500;margin-bottom:20px}
+    .buttons{display:flex;gap:10px;margin-bottom:24px}
+    .btn{padding:10px 16px;border-radius:8px;font-weight:600;cursor:pointer;transition:all .3s ease}
+    .btn.primary{background:linear-gradient(90deg,var(--primary),var(--secondary));color:#fff}
+    .btn.primary:hover{opacity:.9}
+    .btn.ghost{border:1px solid rgba(0,0,0,0.1);color:var(--muted)}
+    .btn.ghost:hover{border-color:var(--primary);color:var(--primary)}
+    .contact,.skills,.languages,.certifications{width:100%;margin-bottom:28px}
+    .contact ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .contact li{color:var(--muted);font-size:14px}
+    .skills h3,.languages h3,.certifications h3{font-size:15px;margin-bottom:8px;color:#111827}
+    .skill{margin-bottom:10px}
+    .skill .label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+    .bar{height:6px;border-radius:6px;background:#e5e7eb;overflow:hidden;margin-top:4px}
+    .bar span{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));transition:width 1s ease}
+    main{padding:32px}
+    section{margin-bottom:36px}
+    section h2{font-size:18px;margin-bottom:16px;border-bottom:1px solid rgba(0,0,0,0.08);padding-bottom:6px;color:#111827}
+    .about{color:var(--muted)}
+    .timeline{display:flex;flex-direction:column;gap:16px}
+    .item{padding:16px;background:#f9fafb;border-radius:10px;transition:transform .3s ease;border:1px solid #e5e7eb}
+    .item:hover{transform:translateY(-4px)}
+    .item h3{font-size:15px;margin-bottom:6px;color:#111827}
+    .meta{color:var(--muted);font-size:13px}
+    .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+    .proj{background:#f9fafb;padding:14px;border-radius:10px;transition:transform .3s ease;border:1px solid #e5e7eb}
+    .proj:hover{transform:translateY(-5px)}
+    .proj img{width:100%;height:150px;object-fit:cover;border-radius:6px;margin-bottom:10px}
+    .proj strong{display:block;margin-bottom:4px;color:#111827}
+    footer{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-top:20px}
+    footer a{color:var(--muted)}
+    @media(max-width:900px){
+      .resume{grid-template-columns:1fr}
+      aside{align-items:center}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="resume">
+      <aside>
+        <div class="avatar"><img src="./filesfolder/image.png" alt="Avatar"></div>
+        <h1>Mujtaba Almas</h1>
+        <div class="role">Backend Python Developer</div>
+        <div class="buttons">
+          <!-- <button class="btn primary" onclick="hireMe()">Hire Me</button> -->
+          <button id="hireMeBtn" class="btn">Hire Me</button>
+          <button class="btn" onclick="downloadCV()">Download CV</button>
+        </div>
+        <div class="contact">
+          <ul>
+            <li>📍 Lahore, Pakistan</li>
+            <li>✉️ mujtabaalmas5@email.com</li>
+            <li>🔗 <a href="#">github.com/mujtabaalmas</a></li>
+          </ul>
+        </div>
+        <div class="skills">
+          <h3>Skills</h3>
+          <div class="skill">
+            <div class="label"><span>PYTHON</span><span>83%</span></div>
+            <div class="bar"><span style="width:90%"></span></div>
+          </div>
+          <div class="skill">
+            <div class="label"><span>DJANGO</span><span>70%</span></div>
+            <div class="bar"><span style="width:85%"></span></div>
+          </div>
+          <div class="skill">
+            <div class="label"><span>FASTAPI</span><span>66%</span></div>
+            <div class="bar"><span style="width:80%"></span></div>
+          </div>
+        </div>
+        
+        <div class="certifications">
+          <h3>Certifications</h3>
+          <ul style="list-style:none;padding-left:0;color:var(--muted);font-size:14px;display:flex;flex-direction:column;gap:8px">
+            <li>✔️ OpenEDG Programming with Python</li>
+            <li>✔️ Docker Professional Certificate</li>
+            <li>✔️ Certified Entry-level Python Programmer(PCEP-30-02)</li>
+          </ul>
+        </div>
+        <div class="languages">
+          <h3>Languages</h3>
+          <p>English • Urdu • Punjabi</p>
+        </div>
+      </aside>
+
+            <!-- Modal Popup for Hire Me -->
+  <!-- Popup Modal (hidden by default) -->
+  <div id="hireMeModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 style="margin-left: 4.5rem;">Send Email 📧 to Mujtaba </h2>
+      <form id="hireMeForm">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Your Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" required>
+
+        <label for="body">Message:</label>
+        <textarea id="body" name="body" required></textarea>
+
+        <button type="submit" class="btn">Send Email</button>
+      </form>
+      <div id="formStatus"></div>
+    </div>
+  </div>
+
+      <main>
+        <section>
+          <h2>About</h2>
+          <p class="about"> Graduate of the University of Central Punjab with BS in Computer Science, equipped with certifications 
+              in Python. Passionate about leveraging technical expertise to build efficient applications. Dedicated to 
+                continuous learning and impactful collaboration in the field of software development</p>
+        </section>
+        <section>
+          <h2>Experience</h2>
+          <div class="timeline">
+            <div class="item">
+              <h3>Intern — SSA Soft</h3>
+              <div class="meta">2025 — Present</div>
+              <p>Learing Backend - development, managing APIs with professional guidance.</p>
+            </div>
+            <!-- <div class="item">
+              <h3></h3>
+              <div class="meta">2025 — 2025</div>
+              <p></p>
+            </div> -->
+          </div>
+        </section>
+        <section>
+          <h2>Education</h2>
+          <div class="item">
+            <h3>B.S Computer Science — University of Central Punjab</h3>
+            <div class="meta">2020 — 2024</div>
+            <p>Specialized in Software Engineering. Key subjects: Web applications, Databases</p>
+          </div>
+        </section>
+        <section>
+          <h2>Projects</h2>
+          <div class="projects">
+            <div class="proj">
+              <img src="./filesfolder/PythonDjango.jpg" alt="Project 1">
+              <strong>Python Backend Django API</strong>
+              <p>Progressive web api for a multi-vendor E-commerce marketplace</p>
+            </div>
+            <div class="proj">
+              <img src="./filesfolder/pythonfastapi.jpg" alt="Project 2">
+              <strong>Python Backend Fastapi</strong>
+              <p>Social media web api with PostgreSQL - Enabling user authentication with full CRUD functionality for posts.</p>
+            </div>
+          </div>
+        </section>
+        <!-- <footer>
+          <div>© <span id="year"></span> John Doe</div>
+          <div>
+            <a href="#">LinkedIn</a> · <a href="#">GitHub</a>
+          </div>
+        </footer> -->
+        <footer class="py-6 bg-white text-center">
+        <p class="text-black">&copy; 2025 Mujtaba Almas. All rights reserved.</p>
+        <div class="mt-4 flex justify-center space-x-4">
+          <a href="https://www.linkedin.com/in/mujtabaalmas" target="_blank" class="social-icon" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.5c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zm13.5 12.5h-3v-5.5c0-1.38-.02-3.16-1.93-3.16-1.93 0-2.23 1.51-2.23 3.07v5.59h-3v-11h2.88v1.5h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.61v6.45z"/>
+            </svg>
+          </a>
+          <a href="https://github.com/mujtabaalmas" target="_blank" class="social-icon" aria-label="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M12 0c-6.63 0-12 5.37-12 12 0 5.31 3.44 9.82 8.22 11.41.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.82.42-1.3.76-1.6-2.67-.3-5.48-1.33-5.48-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23.96-.27 1.99-.4 3.01-.41 1.02.01 2.05.14 3.01.41 2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.49 5.93.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58 4.78-1.59 8.22-6.1 8.22-11.41 0-6.63-5.37-12-12-12z"/>
+            </svg>
+          </a>
+        </div>
+      </footer>
+      </main>
+    </div>
+  </div>
+  <script>
+
+          <!-- EmailJS Library -->
+      (function(){
+      emailjs.init("651vFbQxXTrAJ_56a"); // 🔑 Replace with your EmailJS Public Key
+      })();
+      const hireMeBtn = document.getElementById("hireMeBtn");
+      const modal = document.getElementById("hireMeModal");
+      const closeModal = document.querySelector(".close");
+
+      hireMeBtn.onclick = () => modal.style.display = "block";
+      closeModal.onclick = () => modal.style.display = "none";
+      window.onclick = (e) => { if(e.target == modal) modal.style.display = "none"; };
+
+      document.getElementById("hireMeForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const subject = document.getElementById("subject").value;
+      const body = document.getElementById("body").value;
+
+      emailjs.send("service_6frc1gf", "template_26piixl", {
+
+      name: name,        
+      email: email,
+      title: subject,
+      message: body
+
+      }).then(function(response) {
+      document.getElementById("formStatus").innerHTML = "<p style='margin-left: 4rem;color:green;'>✅ Email sent successfully!</p>";
+      document.getElementById("hireMeForm").reset();
+     setTimeout(()=>{ modal.style.display = "none"; }, 1000); // auto close
+    }, function(error) {
+        document.getElementById("formStatus").innerHTML =
+          "<p style='color:red;'>❌ Failed to send. Try again later.</p>";
+    });
+});
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // function hireMe(){
+    //   alert("Thank you for your interest! Please send me an email at mujtabaalmas5@email.com");
+    // }
+
+    function downloadCV(){
+      // You can replace resume.pdf with actual file path in your repo
+      const link = document.createElement('a');
+      link.href = './filesfolder/resume.pdf';
+      link.download = 'mujtaba_almas_CV.pdf';
+      link.click();
+    }
+  </script>
+</body>
+</html>
+
+
+<!-- Animations -->
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+</style>
+
+<script>
+  function openHireMe() {
+    document.getElementById('hireMeModal').classList.remove('hidden');
+  }
+  function closeHireMe() {
+    document.getElementById('hireMeModal').classList.add('hidden');
+  }
+
+  // Handle form submit
+  document.getElementById("hireMeForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const formData = {
+      email: this.email.value,
+      subject: this.subject.value,
+      body: this.body.value,
+      name: this.name.value,
+    };
+
+    const res = await fetch("http://localhost:5000/hireme", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+    const result = await res.json();
+    alert(result.message || result.error);
+    closeHireMe();
+  });
+
+</script>
